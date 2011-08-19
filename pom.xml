@@ -1,0 +1,53 @@
+<project>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.northfuse</groupId>
+	<artifactId>site-theme</artifactId>
+	<packaging>jar</packaging>
+	<name>Maven Site Theme</name>
+	<version>1.0-SNAPSHOT</version>
+	<description>
+	</description>
+	<url>http://northfuse.net/</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:tylersouthwick/site-theme.git</connection>
+		<developerConnection>scm:git:git@github.com:tylersouthwick/site-theme.git</developerConnection>
+		<url>https://github.com/tylersouthwick/site-theme</url>
+	</scm>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>http://github.com/tylersouthwick/site-theme/issues</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<site>
+			<id>site.website</id>
+			<name>Northfuse Site</name>
+			<url>scp://tyler@northfuse.net/data/sites/site-theme</url>
+		</site>
+	</distributionManagement>
+
+	<developers>
+		<developer>
+			<id>northfuse</id>
+			<name>Tyler Southwick</name>
+			<email>tyler@northfuse.net</email>
+		</developer>
+	</developers>
+
+</project>
