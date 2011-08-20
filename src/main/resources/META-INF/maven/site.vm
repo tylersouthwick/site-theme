@@ -145,27 +145,49 @@
   #end
 #end
 ##
-#macro ( menuItem $item )
+#macro ( mainMenuItem $item )
+  #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+  #set ( $currentItemHref = $currentItemHref.replaceAll( '\\', '/' ) )
+##
+  #if ( $alignedFileName == $currentItemHref )
+      <li class="$collapse current_page_item">
+  #else
+      <li class="$collapse">
+  #end
+
+  #link( $currentItemHref $item.name $item.target $item.img $item.position $item.alt $item.border $item.width $item.height )
+
+  #if ( $item && $item.items && $item.items.size() > 0 )
+    <div class="sub">
+      #set ($count = 0)
+      <ul>
+      #foreach( $subitem in $item.items )
+        #if ($count % 5 == 4)
+	  </ul><ul>
+        #end
+          #subMainMenuItem( $subitem )
+        #set ($count = $count + 1)
+      #end
+      </ul>
+    </div>
+  #end
+  </li>
+#end
+#macro ( subMainMenuItem $item )
   #set ( $collapse = "none" )
   #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
   #set ( $currentItemHref = $currentItemHref.replaceAll( '\\', '/' ) )
 ##
-  #if ( $item && $item.items && $item.items.size() > 0 )
-    #if ( $item.collapse == false )
-      #set ( $collapse = "expanded" )
-    #else
-      ## By default collapsed
-      #set ( $collapse = "collapsed" )
-    #end
+  <li>
+    #link( $currentItemHref $item.name $item.target $item.img $item.position $item.alt $item.border $item.width $item.height )
+  </li>
+#end
 ##
-    #set ( $display = false )
-    #displayTree( $display $item )
+#macro ( footerMenuItem $item )
+  #set ( $collapse = "none" )
+  #set ( $currentItemHref = $PathTool.calculateLink( $item.href, $relativePath ) )
+  #set ( $currentItemHref = $currentItemHref.replaceAll( '\\', '/' ) )
 ##
-    #if ( $alignedFileName == $currentItemHref || $display )
-      #set ( $collapse = "expanded" )
-    #end
-  #end
-
   #if ( $alignedFileName == $currentItemHref )
       <li class="$collapse current_page_item">
   #else
@@ -180,72 +202,24 @@
   #else
     #link( $currentItemHref $item.name $item.target $item.img $item.position $item.alt $item.border $item.width $item.height )
   #end
-##  #if ( $item && $item.items && $item.items.size() > 0 )
-##   #if ( $collapse == "expanded" )
-##      <ul>
-##        #foreach( $subitem in $item.items )
-##          #menuItem( $subitem )
-##        #end
-##      </ul>
-##    #end
-##  #end
   </li>
+#end
+##
+#macro ( footerMenu $menus )
+    #if ( $menu.items && $menu.items.size() > 0 )
+##  <ul>
+    #foreach( $item in $menu.items )
+      #footerMenuItem( $item )
+    #end
+##  </ul>
+  #end
 #end
 ##
 #macro ( mainMenu $menus )
   #foreach( $menu in $menus )
-    #if ( $menu.name )
-      #if ( $menu.img )
-        #if( $menu.position )
-          #set ( $position = $menu.position )
-        #else
-          #set ( $position = "left" )
-        #end
-##
-        #if ( ! ( $menu.img.toLowerCase().startsWith("http:/") || $menu.img.toLowerCase().startsWith("https:/") ||
-                $menu.img.toLowerCase().startsWith("ftp:/") || $menu.img.toLowerCase().startsWith("mailto:/") ||
-                $menu.img.toLowerCase().startsWith("file:/") || ($menu.img.toLowerCase().indexOf("://") != -1) ) )
-          #set ( $src = $PathTool.calculateLink( $menu.img, $relativePath ) )
-          #set ( $src = $src.replaceAll( '\\', '/' ) )
-          #set ( $src = ' src="' + $src + '"' )
-        #else
-          #set ( $src = ' src="' + $menu.img + '"' )
-        #end
-##
-        #if( $menu.alt )
-          #set ( $alt = ' alt="' + $menu.alt + '"' )
-        #else
-          #set ( $alt = ' alt="' + $menu.name + '"' )
-        #end
-##
-        #if( $menu.border )
-          #set ( $border = ' border="' + $menu.border + '"' )
-        #else
-          #set ( $border = ' border="0"' )
-        #end
-##
-        #if( $menu.width )
-          #set ( $width = ' width="' + $menu.width + '"' )
-        #else
-          #set ( $width = "" )
-        #end
-        #if( $menu.height )
-          #set ( $height = ' height="' + $menu.height + '"' )
-        #else
-          #set ( $height = "" )
-        #end
-##
-        #set ( $img = '<img class="imageLink"' + $src + $alt + $border + $width + $height + "/>" )
-##
-      #end
-    #end
-    #if ( $menu.items && $menu.items.size() > 0 )
-##  <ul>
     #foreach( $item in $menu.items )
-      #menuItem( $item )
+      #mainMenuItem( $item )
     #end
-##  </ul>
-  #end
   #end
 #end
 ##
@@ -458,6 +432,9 @@
       @import url("$relativePath/css/site.css");*/
       @import url("$relativePath/css/style.css");
     </style>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.hoverIntent.minified.js"></script>
+    <script type="text/javascript" src="js/menu.js"></script>
     <!--
     <link rel="stylesheet" href="$relativePath/css/print.css" type="text/css" media="print" />
     -->
@@ -545,7 +522,7 @@
 	      <div id="footer">
 		      <div class="left">
 			      <ul class="footerMenu">
-					    #mainMenu($decoration.body.menus)
+					    #footerMenu($decoration.body.menus)
 				</ul>
 			</div>
 

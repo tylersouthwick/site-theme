@@ -468,8 +468,40 @@ ul.tabbed {
 ul.tabbed li {
 	float: left;
 	list-style: none;
+	position: relative;
 }
 ul.tabbed a {text-decoration: none;}
+
+ul.tabbed li .sub {
+	position: absolute;
+	top: 44px; left: 0;
+	z-index: 99999;
+	background: #344C00;
+	padding: 20px 20px 20px;
+	float: left;
+	/* bottom right rounded corner */
+	-moz-border-radius-bottomright: 5px;
+	-khtml-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	/* bottom left rounded corner */
+	-moz-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+
+	display: none;
+}
+
+ul.tabbed li .sub ul {
+	list-style: none;
+	margin: 0; padding: 0;
+	width: 250px;
+	float: left;
+}
+
+ul.tabbed li .sub ul li {
+	width: 100%;
+	color: #fff;
+}
 
 #navigation-wrapper {background: url('../img/navigation.gif') repeat-x left top;}
 #navigation-wrapper-2 {background: url('../img/navigation-wrapper-2.gif') no-repeat center top;}
