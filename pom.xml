@@ -10,7 +10,7 @@
 	<artifactId>site-theme</artifactId>
 	<packaging>jar</packaging>
 	<name>Maven Site Theme</name>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<description>
 	</description>
 	<url>http://northfuse.net/</url>
@@ -50,4 +50,24 @@
 		</developer>
 	</developers>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${mavenSitePlugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.wagon</groupId>
+						<artifactId>wagon-ssh</artifactId>
+						<version>1.0</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<mavenSitePlugin.version>3.0</mavenSitePlugin.version>
+	</properties>
 </project>
