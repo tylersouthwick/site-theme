@@ -10,7 +10,7 @@
 	<artifactId>site-theme</artifactId>
 	<packaging>jar</packaging>
 	<name>Maven Site Theme</name>
-	<version>1.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<description>
 	</description>
 	<url>http://northfuse.net/</url>
